@@ -1,47 +1,28 @@
 "use strict";
+const fs = require("fs");
+
+const { XMLParser } = require("fast-xml-parser");
+
+const options = {
+  ignoreAttributes: false,
+};
+
+const parser = new XMLParser(options);
+
 module.exports = {
   getxmlUsers,
 };
 
 function getxmlUsers(req, res) {
   async function getxmlUsers_method() {
-    const returnData = `
-        <persons>
-
-    <person>
-
-        <id>3</id>
-
-        <firstName>Jen</firstName>
-
-        <lastName>Doe</lastName>
-
-    </person>
-
-    <person>
-
-        <id>6</id>
-
-        <firstName>Stephanie</firstName>
-
-        <lastName>Joe</lastName>
-
-    </person>
-
-    <person>
-
-        <id>1</id>
-
-        <firstName>Victoria</firstName>
-
-        <lastName>Doe</lastName>
-
-    </person>
-
-</persons>
-`;
-res.header("Content-Type", "application/xml");
-res.status(200).send(returnData);
+    fs.readFile(__dirname + "/xmlUser.xml", (err, data) => {
+      console.log("__dirname", __dirname);
+      let jsonObj = parser.parse(data);
+      res.json({
+        msg: `XML user list`,
+        data: jsonObj.catalog.persons,
+      });
+    });
   }
 
   getxmlUsers_method().then(function (data) {});
