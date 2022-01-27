@@ -13,8 +13,10 @@ app.set("views", __dirname + "/views");
 app.use(bodyParser.urlencoded({ limit: "60mb", extended: true }));
 app.use(bodyParser.json({ limit: "60mb", extended: true }));
 
+console.log('path', path.join(__dirname, 'public/build'));
 
-app.use(express.static(path.join(__dirname, 'public/build')));
+// app.use(express.static(path.join(__dirname, 'public/build')));
+
 const swaggerDocument = require('./utilitys/swagger.json');
 
 const swaggerOptions = {
@@ -25,7 +27,7 @@ const swaggerOptions = {
             contact: {
                 name: 'USER DATA'
             },
-            servers: ["http://localhost:3000"]
+            servers: ["http://localhost:3001"]
         }
     },
     apis: ['app.js']
@@ -51,6 +53,15 @@ app.use(function (req, res, next) {
 });
 
 app.use('/api', require('./modules/router')(express));
+
+// deploy front end
+const root = require('path').join(__dirname, 'build')
+app.use(express.static(root));
+app.get("*", (req, res) => {
+    res.sendFile('index.html', { root });
+})
+
+
 var port = process.env.PORT || 3001;
 
 http.createServer(app).listen(port, () => {
