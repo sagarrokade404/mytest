@@ -1,7 +1,10 @@
 const express = require("express"),
   bodyParser = require("body-parser"),
   cors = require("cors"),
-  http= require('http');
+  http= require('http'),
+  path = require('path'),
+  swaggerUI = require('swagger-ui-express'),
+  swaggerJsDoc = require('swagger-jsdoc');
 
 var app = express();
 app.use(cors({ origin: "*" }));
@@ -11,6 +14,29 @@ app.use(bodyParser.urlencoded({ limit: "60mb", extended: true }));
 app.use(bodyParser.json({ limit: "60mb", extended: true }));
 
 
+app.use(express.static(path.join(__dirname, 'public/build')));
+const swaggerDocument = require('./utilitys/swagger.json');
+
+const swaggerOptions = {
+    swaggerDefinition : {
+        info: {
+            title: 'USER API',
+            description: ' USER API notificaton ',
+            contact: {
+                name: 'USER DATA'
+            },
+            servers: ["http://localhost:3000"]
+        }
+    },
+    apis: ['app.js']
+};
+
+
+const swagerOptions= swaggerJsDoc(swaggerOptions);
+
+var app = express()
+// https://github.com/OAI/OpenAPI-Specification/blob/main/examples/v2.0/json/petstore-expanded.json
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument, swagerOptions))
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');

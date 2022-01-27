@@ -1,60 +1,18 @@
-'use strict';
+"use strict";
+const fs = require("fs");
 module.exports = {
-    getJsonUsers
-}
+  getJsonUsers,
+};
 
-function getJsonUsers(req,res) {
-    async function getJsonUsers_method() {
- 
-        const returnData = {
+function getJsonUsers(req, res) {
+  async function getJsonUsers_method() {
+    fs.readFile(__dirname + "/jsonUser.json", (err, data) => {
+      res.json({
+        msg: `XML user list`,
+        data: JSON.parse(data),
+      });
+    });
+  }
 
-            "person": [
-        
-                {
-        
-                    "id": 10,
-        
-                    "firstName": "John",
-        
-                    "lastName": "Doe"
-        
-                },
-        
-                {
-        
-                    "id": 5,
-        
-                    "firstName": "Jack",
-        
-                    "lastName": "Doe"
-        
-                },
-        
-                {
-        
-                    "id": 7,
-        
-                    "firstName": "James",
-        
-                    "lastName": "Doe"
-        
-                }
-        
-            ]
-        
-        }
-
-            res.json( {
-                msg: `JSON user list`,
-                data: returnData
-            })
-        
-  
-    } 
-
-
-
-    getJsonUsers_method().then( function(data) {
-
-    })
+  getJsonUsers_method().then(function (data) {});
 }

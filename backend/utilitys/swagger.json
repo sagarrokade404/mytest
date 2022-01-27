@@ -1,0 +1,94 @@
+  
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Swagger userData",
+      "description": "A sample API that uses a userData as an example to demonstrate features in the swagger-2.0 specification",
+      "termsOfService": "http://swagger.io/terms/",
+      "contact": {
+        "name": "Swagger API Team",
+        "email": "apiteam@swagger.io",
+        "url": "http://swagger.io"
+      },
+      "license": {
+        "name": "Apache 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+      }
+    },
+    "host": "localhost:3001",
+    "basePath": "/api",
+    "schemes": [
+      "http"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/getxmlUsers": {
+        "get": {
+            "description": "get xml users list",
+            "operationId": "get xml users",
+            "responses": {
+              "200": {
+                "description": "users response"
+              },
+              "default": {
+                "description": "unexpected error",
+                "schema": {
+                  "$ref": "#/definitions/Error"
+                }
+              }
+            }
+          }
+      },
+      "/getJsonUsers": {
+        "get": {
+          "description": "get json user list",
+          "operationId": "get json user",
+          "responses": {
+            "200": {
+              "description": "users response"
+            },
+            "default": {
+              "description": "unexpected error",
+              "schema": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Users": {
+        "type": "object",
+        "allOf": [
+          {
+           "msg": "User data",
+            "data": []
+          }
+        ]
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+  
