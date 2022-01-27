@@ -13,10 +13,6 @@ app.set("views", __dirname + "/views");
 app.use(bodyParser.urlencoded({ limit: "60mb", extended: true }));
 app.use(bodyParser.json({ limit: "60mb", extended: true }));
 
-console.log('path', path.join(__dirname, 'public/build'));
-
-// app.use(express.static(path.join(__dirname, 'public/build')));
-
 const swaggerDocument = require('./utilitys/swagger.json');
 
 const swaggerOptions = {
